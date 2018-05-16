@@ -7,9 +7,10 @@
     tools:context="com.example.arpitkanda.orgnickart.Main2Activity">
 
 
-<RelativeLayout
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:id="@+id/main_layout_id">
 
       <RelativeLayout
@@ -31,15 +32,11 @@
                 android:orientation="horizontal">
             </LinearLayout>
         </RelativeLayout>
-        <ScrollView
-            android:id="@+id/grid_scroll_id"
-            android:layout_width="match_parent"
-            android:layout_below="@id/gallary_layout_id"
-            android:layout_height="wrap_content">
             <RelativeLayout
                 android:id="@+id/grid_parent_id"
                 android:layout_width="match_parent"
                 android:gravity="center"
+                android:layout_below="@id/gallary_layout_id"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/grid_heading_id"
@@ -48,19 +45,20 @@
                     android:gravity="center"
                     android:textSize="20dp"
                     android:text="Shop By Category"/>
+            </RelativeLayout>
+    <ScrollView
+        android:id="@+id/grid_scroll_id"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/grid_parent_id"
+        android:layout_height="wrap_content">
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
 
-                <GridLayout
-                    android:id="@+id/grid_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:rowCount="4"
-                    android:gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_below="@id/grid_heading_id"
-                    android:layout_gravity="center"
-                    android:columnCount="2">
+                   android:gravity="center">
 
                     <RelativeLayout
+                        android:id="@+id/layout_one"
                         android:layout_height="180dp"
                         android:background="@color/grid_color"
                         android:gravity="center"
@@ -83,9 +81,11 @@
 
                     </RelativeLayout>
                     <RelativeLayout
+                        android:id="@+id/layout_two"
                         android:layout_height="180dp"
                         android:layout_width="180dp"
                         android:gravity="center"
+                        android:layout_toRightOf="@id/layout_one"
                         android:background="@color/grid_color">
                     <ImageView
                         android:id="@+id/grid_image_2"
@@ -104,9 +104,11 @@
                     </RelativeLayout>
 
                  <RelativeLayout
+                        android:id="@+id/layout_three"
                         android:layout_height="180dp"
                         android:layout_width="180dp"
                         android:gravity="center"
+                        android:layout_below="@id/layout_one"
                         android:background="@color/grid_color">
                     <ImageView
                         android:id="@+id/grid_image_3"
@@ -125,9 +127,12 @@
 
                     </RelativeLayout>
                     <RelativeLayout
+                        android:id="@+id/layout_four"
                         android:layout_height="180dp"
                         android:layout_width="180dp"
                         android:gravity="center"
+                        android:layout_toRightOf="@id/layout_three"
+                        android:layout_below="@id/layout_two"
                         android:background="@color/grid_color">
                     <ImageView
                         android:id="@+id/grid_image_4"
@@ -144,8 +149,7 @@
                             android:layout_below="@id/grid_image_4"
                             android:text="Egg and Meat"/>
                     </RelativeLayout>
-                </GridLayout>
-            </RelativeLayout>
+               </RelativeLayout>
         </ScrollView>
-</RelativeLayout>
+</LinearLayout>
     </ScrollView>

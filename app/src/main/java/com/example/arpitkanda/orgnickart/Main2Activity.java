@@ -1,10 +1,14 @@
 package com.example.arpitkanda.orgnickart;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,13 +18,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+
+import java.sql.Connection;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView bottom;
     MaterialSearchView searchView;
+    Button login_button;
+    Connection conn;
+    ConnectionClass connectionClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,9 @@ public class Main2Activity extends AppCompatActivity
         setSupportActionBar(toolbar);
         bottom =(BottomNavigationView)findViewById(R.id.navigation_id);
         searchView=(MaterialSearchView)findViewById(R.id.search_view_id);
+        login_button=(Button)findViewById(R.id.login_button_id);
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams)bottom.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationViewBehavior());
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -44,11 +58,23 @@ public class Main2Activity extends AppCompatActivity
         fragmentTransaction.replace(R.id.fragmentContainer,homeClass);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+//        login_fragment();
         bottom_onClick();
+        connectionClass = new ConnectionClass();
+        (new DBConnect()).execute(null, null, null);
     }
 
 
 
+    public void login_fragment(){
+        login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Main2Activity.this,Login_Register.class);
+                startActivity(intent);
+            }
+        });
+    }
     public void bottom_onClick(){
         bottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -81,6 +107,22 @@ public class Main2Activity extends AppCompatActivity
         }
     }
 
+    class DBConnect extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                Connection conn = connectionClass.conn();
+                Toast.makeText(Main2Activity.this, "GET CONNECTION"+conn,
+                        Toast.LENGTH_LONG).show();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Log.e("GET SOME ERRORS", ex.toString());
+            }
+            return null;
+        }
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -103,7 +145,8 @@ public class Main2Activity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            Intent intent=new Intent(Main2Activity.this,Login_Register.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -113,6 +156,9 @@ public class Main2Activity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+
+        }
+        else if(id==R.id.login_button_id){
 
         }
 

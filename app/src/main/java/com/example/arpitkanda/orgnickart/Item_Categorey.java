@@ -64,6 +64,7 @@ public class Item_Categorey extends Fragment {
                 return false;
             }
         });
+
         return view;
     }
 
